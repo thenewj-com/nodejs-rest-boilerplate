@@ -38,6 +38,8 @@ const init = () => {
 	app.use(logRequestStart);
 	app.use(logResponseBody);
 
+	app.use(`/public`, express.static(`public`));
+
 	app.get(`/`, (req, res) => {
 		res.status(200).send(
 			`Welcome to <strong>${name}</strong>.<br>

@@ -5,20 +5,10 @@
 
 `use strict`;
 
-require(`dotenv`).config();
-
-const { name } = require(`../../package.json`);
-const {
-	server: { NODE_ENV },
-	db: { MONGO_CLUSTER_URI }
-} = require(`../constants`);
-
-const mongoUri =
-	MONGO_CLUSTER_URI ||
-	`mongodb://localhost:27017/${name}-${NODE_ENV || `development`}`;
+const { db: { MONGO_CLUSTER_URI } } = require(`../constants`);
 
 module.exports = {
-	mongoUri,
+	mongoUri: MONGO_CLUSTER_URI,
 	dbOptions: {
 		// useCreateIndex: true,
 		useNewUrlParser: true,
