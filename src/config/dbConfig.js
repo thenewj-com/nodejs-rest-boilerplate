@@ -7,9 +7,12 @@
 
 require(`dotenv`).config();
 
-// eslint-disable-next-line no-undef
-const { NODE_ENV, MONGO_CLUSTER_URI } = process.env;
 const { name } = require(`../../package.json`);
+const {
+	server: { NODE_ENV },
+	db: { MONGO_CLUSTER_URI }
+} = require(`../constants`);
+
 const mongoUri =
 	MONGO_CLUSTER_URI ||
 	`mongodb://localhost:27017/${name}-${NODE_ENV || `development`}`;
@@ -17,7 +20,7 @@ const mongoUri =
 module.exports = {
 	mongoUri,
 	dbOptions: {
-		useCreateIndex: true,
+		// useCreateIndex: true,
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		connectTimeoutMS: 1000,

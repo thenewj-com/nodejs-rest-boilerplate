@@ -6,11 +6,13 @@
 `use strict`;
 
 const { mongoUri, dbOptions } = require(`./dbConfig`);
-const { logRequestStart, logResponseBody } = require(`./middlewares`);
+const { logRequestStart, logResponseBody, rollbar, initialiseSentry } = require(`./middlewares`);
 
 module.exports = {
 	mongoUri,
 	dbOptions,
 	logRequestStart,
 	logResponseBody,
+	rollbar,
+	initialiseSentry,
 };

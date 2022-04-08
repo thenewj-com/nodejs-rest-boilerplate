@@ -18,15 +18,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/the-vishal-kumar/nodejs-rest-boilerplate.git"
+    "url": "git+https://github.com/thenewj-com/nodejs-rest-boilerplate.git"
   },
   "bugs": {
-    "url": "https://github.com/the-vishal-kumar/nodejs-rest-boilerplate/issues"
+    "url": "https://github.com/thenewj-com/nodejs-rest-boilerplate/issues"
   },
-  "homepage": "https://github.com/the-vishal-kumar/nodejs-rest-boilerplate#readme",
+  "homepage": "https://github.com/thenewj-com/nodejs-rest-boilerplate#readme",
   "engines": {
     "yarn": "1.x",
-    "node": "14.x"
+    "node": "16.x"
   },
   "keywords": [
     "NodeJs",
@@ -39,19 +39,22 @@
   "author": "Vishal Kumar <vishal194kumar@gmail.com>",
   "license": "AGPL-3.0-or-later",
   "dependencies": {
+    "@sentry/node": "^6.19.6",
+    "@sentry/tracing": "^6.19.6",
     "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "gen-uid": "0.0.2",
-    "joi": "^17.4.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "gen-uid": "^0.0.2",
+    "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "md5": "^2.3.0",
-    "mongoose": "^5.10.9"
+    "mongoose": "^6.2.10",
+    "rollbar": "^2.24.1"
   },
   "devDependencies": {
-    "eslint": "^7.9.0",
-    "husky": "^4.3.0",
-    "lint-staged": "^10.4.0",
-    "nodemon": "^2.0.7"
+    "eslint": "^8.12.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
+    "nodemon": "^2.0.15"
   }
 }

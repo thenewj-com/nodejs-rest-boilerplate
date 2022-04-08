@@ -7,8 +7,11 @@
 
 const express = require(`express`);
 const cors = require(`cors`);
-// eslint-disable-next-line no-undef
-const port = process.env.PORT || 8000;
+
+const {
+	server: { PORT, SENTRY_DSN },
+	i18n: { errorMessages: { NOT_FOUND } },
+} = require(`../constants`);
 
 const {
 	name,
@@ -21,16 +24,17 @@ const {
 } = require(`../utilities`);
 
 const {
-	i18n: { errorMessages: { NOT_FOUND } },
-} = require(`../constants`);
+	logRequestStart,
+	logResponseBody,
+	// rollbar,
+	initialiseSentry
+} = require(`../config`);
 
 const init = () => {
 	const app = express();
 	app.use(express.json());
-
 	app.use(cors());
 
-	const { logRequestStart, logResponseBody } = require(`../config`);
 	app.use(logRequestStart);
 	app.use(logResponseBody);
 
@@ -60,6 +64,12 @@ const init = () => {
 		sendResponse(req, res, 404, { message: NOT_FOUND });
 	});
 
+	// app.use(rollbar.errorHandler());
+	if (SENTRY_DSN) {
+		const Sentry = initialiseSentry(app);
+		app.use(Sentry.Handlers.errorHandler());
+	}
+
 	// eslint-disable-next-line no-unused-vars
 	app.use((err, req, res, next) => {
 		sendResponse(req, res, 500, {}, { message: err.message || err });
@@ -70,5 +80,5 @@ const init = () => {
 
 module.exports = {
 	init,
-	port,
+	port: PORT,
 };

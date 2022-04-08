@@ -9,7 +9,7 @@ global.__basedir = __dirname;
 
 // eslint-disable-next-line no-undef
 const nodeVersion = parseInt(process.versions.node);
-if (nodeVersion < 12) throw `Please upgrade Node version to 12 or higher`;
+if (nodeVersion < 16) throw `Kindly upgrade Node version to 16 or higher`;
 
 const { dbInit, serverInit, serverPort } = require(`./app`);
 const {
