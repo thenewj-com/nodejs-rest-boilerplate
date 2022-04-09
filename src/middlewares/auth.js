@@ -12,7 +12,7 @@ const {
 } = require(`../utilities`);
 const { i18n: { errorMessages: { INVALID_TOKEN } } } = require(`../constants`);
 
-const isUserLoggedIn = (checkTokenInDB = true) => async (req, res, next) => {
+const isLoggedIn = (checkTokenInDB = true) => async (req, res, next) => {
 	try {
 		const { authorization } = req.headers;
 		const token = authorization && authorization.split(` `)[1];
@@ -32,5 +32,5 @@ const isUserLoggedIn = (checkTokenInDB = true) => async (req, res, next) => {
 };
 
 module.exports = {
-	isUserLoggedIn,
+	isLoggedIn,
 };
