@@ -48,19 +48,8 @@ const init = () => {
 		);
 	});
 
-	const {
-		User: {
-			UnAuthed: UnAuthedRoutes,
-			Authed: AuthedRoutes,
-			Admin: AdminRoutes,
-			Reviewer: ReviewerRoutes,
-		},
-	} = require(`../routes`);
-
-	app.use(`/`, UnAuthedRoutes);
-	app.use(`/`, AuthedRoutes);
-	app.use(`/admin`, AdminRoutes);
-	app.use(`/reviewer`, ReviewerRoutes);
+	const { User } = require(`../routes`);
+	app.use(`/`, User);
 
 	app.use((req, res) => {
 		sendResponse(req, res, 404, { message: NOT_FOUND });

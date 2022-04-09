@@ -3,7 +3,7 @@
 A NodeJs application with Express framework, MongoDb as database, Mongoose as ODM.  
 It uses Joi for schema validation.  
 It uses eslint, husky, and lint-staged for code-linting purposes.  
-It contains a simple signup-login mechanism.
+It contains a simple routing example.
 
 ## Tech Stack
 
@@ -23,10 +23,6 @@ It contains a simple signup-login mechanism.
 
 > `yarn start` or `yarn run dev`
 
-## Problem Statement
-
-> Go to [Problem Statement]
-
 ## License
 
 AGPL-3.0-or-later
@@ -40,5 +36,4 @@ AGPL-3.0-or-later
 [Mongoose]: <https://mongoosejs.com/>
 [Joi]: <https://joi.dev/>
 [Postman]: <https://www.postman.com/>
-[nodejs-rest-boilerplate]: <https://github.com/the-vishal-kumar/nodejs-rest-boilerplate/>
-[Problem Statement]: <./PROBLEM.md>
+[nodejs-rest-boilerplate]: <https://github.com/thenewj-com/nodejs-rest-boilerplate/>

@@ -1,5 +1,5 @@
 /**
- * unauthed.js
+ * login.js
  * Vishal Kumar
  */
 
@@ -7,20 +7,10 @@
 
 const { Router } = require(`express`);
 const router = new Router();
-const {
-	User: { loginSchema },
-} = require(`../../validations`);
-const {
-	User: { login },
-} = require(`../../controllers`);
-const {
-	Response: { validateInput, sendResponse },
-} = require(`../../utilities`);
 
-router.use(async (req, res, next) => {
-	// Rate Limiter Middleware
-	next();
-});
+const { User: { loginSchema } } = require(`../../validations`);
+const { User: { login } } = require(`../../controllers`);
+const { Response: { validateInput, sendResponse } } = require(`../../utilities`);
 
 router.post(`/login`, validateInput(loginSchema), async (req, res, next) => {
 	try {

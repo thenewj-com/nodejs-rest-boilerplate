@@ -9,8 +9,8 @@ const Joi = require(`joi`);
 
 const loginSchema = {
 	body: Joi.object().keys({
-		email: Joi.string().trim().required().email().label(`Email`),
-		password: Joi.string().trim().required().label(`Password`),
+		countryCode: Joi.string().trim().required().min(2).label(`Country Code`),
+		phoneNumber: Joi.string().trim().required().min(10).max(10).label(`Phone Number`),
 	}),
 };
 

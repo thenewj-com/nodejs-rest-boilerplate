@@ -22,7 +22,7 @@ const validateInput = (schema) => (req, res, next) => {
 		return sendResponse(req, res, 422, { error: errorMessage });
 	}
 	Object.assign(req, value);
-	return next();
+	next();
 };
 
 const sendResponse = (req, res, status = 200, data = {}, meta = {}) => {

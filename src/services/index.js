@@ -7,5 +7,4 @@
 
 module.exports = {
 	User: require(`./wrapperService`)(`User`),
-	Task: require(`./wrapperService`)(`Task`),
 };

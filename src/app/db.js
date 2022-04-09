@@ -25,25 +25,20 @@ const init = async () => {
 			console.info(`MongoDB event reconnected`);
 		});
 
-		mongoose.connection.on(`error`, (err) => {
-			console.error(`MongoDB event error: ` + err);
+		mongoose.connection.on(`error`, (error) => {
+			console.error(`MongoDB event error===>`, error, `---MongoDB event error`);
 		});
 
 		try {
 			// Bootstrap dummy data
 		} catch (error) {
-			console.error(
-				`\nMongo Syntax Error===>`,
-				JSON.stringify(error),
-				`---Mongo Syntax Error`
-			);
+			console.error(`Mongo Syntax Error===>`, error, `---Mongo Syntax Error`);
 		}
 	});
 
-	await mongoose.connect(mongoUri, dbOptions, (err) => {
-		if (err) {
-			console.error(`MongoDB connection error: ` + err);
-			// eslint-disable-next-line no-undef
+	await mongoose.connect(mongoUri, dbOptions, (error) => {
+		if (error) {
+			console.error(`MongoDB connection error===>`, error, `---MongoDB connection error`);
 			process.exit(1);
 		}
 	});

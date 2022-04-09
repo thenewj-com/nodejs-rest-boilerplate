@@ -11,39 +11,43 @@ const userSchema = new Schema(
 	{
 		firstName: {
 			type: String,
-			required: true,
-			index: true,
+			default: ``,
 		},
 		lastName: {
 			type: String,
 			default: ``,
-			index: true,
-			sparse: true,
 		},
 		email: {
 			type: String,
-			required: true,
 			unique: true,
-			index: true,
-		},
-		password: {
-			type: String,
-			required: true,
-		},
-		accessToken: {
-			type: String,
-			trim: true,
-			default: null,
 			index: true,
 			sparse: true,
 		},
-		reviewees: [
-			{
-				type: Schema.Types.ObjectId,
-				ref: `User`,
+		countryCode: {
+			type: String,
+			required: function () { return this.phoneNumber && this.phoneNumber.length === 10; },
+		},
+		phoneNumber: {
+			type: String,
+			required: function () { return this.countryCode && this.countryCode.length === 10; },
+			unique: true,
+			index: true,
+			sparse: true,
+		},
+		profileImage: {
+			original: {
+				type: String,
 			},
-		],
+			thumbnail: {
+				type: String,
+			}
+		},
 		isAdmin: {
+			type: Boolean,
+			default: false,
+			index: true,
+		},
+		isActive: {
 			type: Boolean,
 			default: false,
 			index: true,
@@ -53,8 +57,13 @@ const userSchema = new Schema(
 			default: false,
 			index: true,
 		},
-		createdAt: Number,
-		updatedAt: Number,
+		createdAt: {
+			type: Number,
+			// set: function (datetime) { Math.floor(new Date(datetime).now() / 1000) }
+		},
+		updatedAt: {
+			type: Number,
+		},
 	},
 	{
 		// Make Mongoose use Unix time (seconds since Jan 1, 1970)

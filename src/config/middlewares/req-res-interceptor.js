@@ -16,7 +16,7 @@ const getLoggerForStatusCode = (statusCode) => {
 		return console.warn.bind(console);
 	}
 
-	return console.log.bind(console);
+	return console.info.bind(console);
 };
 
 // Function to log Request Payload
@@ -92,9 +92,8 @@ const logResponseBody = (req, res, next) => {
 	res.end = function (chunk) {
 		if (chunk) chunks.push(chunk);
 
-		// eslint-disable-next-line no-undef
 		let body = Buffer.concat(chunks).toString(`utf8`);
-		console.log(`[${req.requestId}] ${req.path} Response: ${body}`);
+		console.info(`[${req.requestId}] ${req.path} Response: ${body}`);
 
 		oldEnd.apply(res, arguments);
 	};

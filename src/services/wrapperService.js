@@ -18,6 +18,12 @@ module.exports = (model) => {
 		return JSON.parse(JSON.stringify(await Model[model].insertMany(arrToSave)));
 	};
 
+	Services.getOne = async (criteria, projection, options = {}) => {
+		options.lean = true;
+		options.virtuals = true;
+		return await Model[model].findOne(criteria, projection, options);
+	};
+
 	Services.getMany = async (criteria, projection, options = {}) => {
 		options.lean = true;
 		options.virtuals = true;

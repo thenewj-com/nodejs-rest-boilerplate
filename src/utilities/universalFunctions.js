@@ -18,23 +18,20 @@ const encryptString = (str) => {
 	return MD5(MD5(str));
 };
 
-const getTokenForUserId = async (userId) => {
-	return await JWT.sign({ userId }, JWT_SECRET_KEY);
+const generateToken = async (data, expiresIn = `1d`) => {
+	return JWT.sign(data, JWT_SECRET_KEY, { expiresIn });
 };
 
 const verifyToken = async (token) => {
 	return new Promise((resolve, reject) => {
 		JWT.verify(token, JWT_SECRET_KEY, async (err, decoded) => {
 			if (err) reject(err);
-			else if (decoded.userId) {
-				const user = await UserService.getMany({
-					_id: decoded.userId,
-					accessToken: token,
-				});
-				if (user && user.length > 0)
-					resolve(deleteUnnecessaryUserData(user[0]));
-				else reject(NOT_FOUND);
-			} else reject(NOT_FOUND);
+			if (decoded._id) {
+				const user = await UserService.getOne({ _id: decoded._id });
+				if (user) resolve(deleteUnnecessaryUserData(user));
+				reject(NOT_FOUND);
+			}
+			reject(NOT_FOUND);
 		});
 	});
 };
@@ -58,7 +55,7 @@ const pick = (object, keys) => {
 
 module.exports = {
 	encryptString,
-	getTokenForUserId,
+	generateToken,
 	verifyToken,
 	deleteUnnecessaryUserData,
 	pick,
