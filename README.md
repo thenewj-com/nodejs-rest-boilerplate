@@ -27,10 +27,19 @@ It contains a simple routing example.
 
 AGPL-3.0-or-later
 
-## Meet The Maker
+## Meet The Makers
 [Vishal Kumar] - Software Engineer 👨‍💻 and an Aspiring Entrepreneur👨‍💼
 
+[Shrikant Aher]
+
+[Gunjan Munde]
+
+[Joel D'souza]
+
 [Vishal Kumar]: <https://www.linkedin.com/in/the-vishal-kumar/>
+[Shrikant Aher]: <https://www.linkedin.com/in/shrikantaher/>
+[Gunjan Munde]: <https://www.linkedin.com/in/gunjan-munde-599066183/>
+[Joel D'souza]: <https://www.linkedin.com/in/joel-dsouza-19401a12a/>
 [Node.js]: <https://nodejs.dev/>
 [Express]: <http://expressjs.com/>
 [Mongoose]: <https://mongoosejs.com/>

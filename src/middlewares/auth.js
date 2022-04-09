@@ -5,20 +5,27 @@
 
 `use strict`;
 
-const { UniversalFunctions: { verifyToken } } = require(`../utilities`);
-const {	i18n: {errorMessages: { INVALID_TOKEN }}} = require(`../constants`);
+const { Auth: AuthService } = require(`../services`);
+const {
+	UniversalFunctions: { verifyToken },
+	Response: { sendResponse }
+} = require(`../utilities`);
+const { i18n: { errorMessages: { INVALID_TOKEN } } } = require(`../constants`);
 
-const isUserLoggedIn = async (req, res, next) => {
+const isUserLoggedIn = (checkTokenInDB = true) => async (req, res, next) => {
 	try {
 		const { authorization } = req.headers;
 		const token = authorization && authorization.split(` `)[1];
 		if (token) {
-			// TODO: Check if token exists in DB
+			if (checkTokenInDB) {
+				const auth = await AuthService.getOne({ token });
+				if (!auth) return sendResponse(req, res, 401, { error: INVALID_TOKEN });
+			}
 			const user = await verifyToken(token);
 			req.user = user;
-			next();
+			return next();
 		}
-		next(INVALID_TOKEN);
+		sendResponse(req, res, 401, { error: INVALID_TOKEN });
 	} catch (error) {
 		next(error);
 	}

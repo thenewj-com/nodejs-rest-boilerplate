@@ -18,18 +18,18 @@ const encryptString = (str) => {
 	return MD5(MD5(str));
 };
 
-const generateToken = async (data, expiresIn = `1d`) => {
+const generateToken = (data, expiresIn = `1d`) => {
 	return JWT.sign(data, JWT_SECRET_KEY, { expiresIn });
 };
 
 const verifyToken = async (token) => {
 	return new Promise((resolve, reject) => {
 		JWT.verify(token, JWT_SECRET_KEY, async (err, decoded) => {
-			if (err) reject(err);
+			if (err) return reject(err);
 			if (decoded._id) {
 				const user = await UserService.getOne({ _id: decoded._id });
-				if (user) resolve(deleteUnnecessaryUserData(user));
-				reject(NOT_FOUND);
+				if (user) return resolve(deleteUnnecessaryUserData(user));
+				return reject(NOT_FOUND);
 			}
 			reject(NOT_FOUND);
 		});
@@ -38,7 +38,7 @@ const verifyToken = async (token) => {
 
 const deleteUnnecessaryUserData = (data) => {
 	delete data.password;
-	delete data.accessToken;
+	// delete data.accessToken;
 	delete data.__v;
 	return data;
 };

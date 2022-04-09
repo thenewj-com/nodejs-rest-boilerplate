@@ -45,29 +45,17 @@ const logRequestStart = (req, res, next) => {
 	const logFn = () => {
 		cleanup();
 		const logger = getLoggerForStatusCode(res.statusCode);
-		logger(
-			`[${req.requestId}] ${req.path} ${JSON.stringify(payload)} ${
-				res.statusCode
-			} ${res.statusMessage}; ${res.get(`Content-Length`) || 0}b sent`
-		);
+		logger(`[${req.requestId}] ${req.path} ${JSON.stringify(payload)} ${res.statusCode} ${res.statusMessage}; ${res.get(`Content-Length`) || 0}b sent`);
 	};
 
 	const abortFn = () => {
 		cleanup();
-		console.warn(
-			`[${req.requestId}] ${req.path} ${JSON.stringify(
-				payload
-			)} Request aborted by the client`
-		);
+		console.warn(`[${req.requestId}] ${req.path} ${JSON.stringify(payload)} Request aborted by the client`);
 	};
 
 	const errorFn = (err) => {
 		cleanup();
-		console.error(
-			`[${req.requestId}] ${req.path} ${JSON.stringify(
-				payload
-			)} Request pipeline error: ${err}`
-		);
+		console.error(`[${req.requestId}] ${req.path} ${JSON.stringify(payload)} Request pipeline error: ${err}`);
 	};
 
 	res.on(`finish`, logFn); // successful pipeline (regardless of its response)

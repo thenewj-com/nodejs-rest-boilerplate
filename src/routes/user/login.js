@@ -15,7 +15,7 @@ const { Response: { validateInput, sendResponse } } = require(`../../utilities`)
 router.post(`/login`, validateInput(loginSchema), async (req, res, next) => {
 	try {
 		const data = await login(req.body);
-		sendResponse(req, res, 200, { ...data });
+		sendResponse(req, res, 200, data);
 	} catch (error) {
 		next(error);
 	}

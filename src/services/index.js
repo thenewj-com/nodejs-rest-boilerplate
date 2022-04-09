@@ -6,5 +6,6 @@
 `use strict`;
 
 module.exports = {
+	Auth: require(`./wrapperService`)(`Auth`),
 	User: require(`./wrapperService`)(`User`),
 };

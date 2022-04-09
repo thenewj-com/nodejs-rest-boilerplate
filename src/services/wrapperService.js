@@ -21,13 +21,13 @@ module.exports = (model) => {
 	Services.getOne = async (criteria, projection, options = {}) => {
 		options.lean = true;
 		options.virtuals = true;
-		return await Model[model].findOne(criteria, projection, options);
+		return Model[model].findOne(criteria, projection, options);
 	};
 
 	Services.getMany = async (criteria, projection, options = {}) => {
 		options.lean = true;
 		options.virtuals = true;
-		return await Model[model].find(criteria, projection, options);
+		return Model[model].find(criteria, projection, options);
 	};
 
 	Services.getPopulatedMany = async (
@@ -38,7 +38,7 @@ module.exports = (model) => {
 	) => {
 		options.lean = true;
 		options.virtuals = true;
-		return await Model[model]
+		return Model[model]
 			.find(criteria, projection, options)
 			.populate(populateQuery)
 			.exec();
@@ -49,30 +49,30 @@ module.exports = (model) => {
 		options.lean = true;
 		options.useFindAndModify = false;
 		options.virtuals = true;
-		return await Model[model].findOneAndUpdate(criteria, dataToUpdate, options);
+		return Model[model].findOneAndUpdate(criteria, dataToUpdate, options);
 	};
 
 	Services.updateMany = async (criteria, dataToUpdate, options = {}) => {
 		options.new = true;
 		options.lean = true;
 		options.virtuals = true;
-		return await Model[model].updateMany(criteria, dataToUpdate, options);
+		return Model[model].updateMany(criteria, dataToUpdate, options);
 	};
 
 	Services.deleteOne = async (criteria) => {
-		return await Model[model].deleteOne(criteria);
+		return Model[model].deleteOne(criteria);
 	};
 
 	Services.deleteMany = async (criteria) => {
-		return await Model[model].deleteMany(criteria);
+		return Model[model].deleteMany(criteria);
 	};
 
 	Services.count = async (criteria) => {
-		return await Model[model].countDocuments(criteria);
+		return Model[model].countDocuments(criteria);
 	};
 
 	Services.aggregate = async (group) => {
-		return await Model[model].aggregate(group);
+		return Model[model].aggregate(group);
 	};
 
 	return Services;
