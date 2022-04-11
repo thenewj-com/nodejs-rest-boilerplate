@@ -28,7 +28,7 @@ It contains a simple routing example.
 AGPL-3.0-or-later
 
 ## Meet The Makers
-[Vishal Kumar] - Software Engineer 👨‍💻 and an Aspiring Entrepreneur👨‍💼
+[Vishal Kumar] - Software Engineer👨‍💻 and an Aspiring Entrepreneur👨‍💼
 
 [Shrikant Aher]
 

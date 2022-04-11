@@ -11,7 +11,10 @@ const { User: UserService, Auth: AuthService } = require(`../../services`);
 const { UniversalFunctions: { generateToken, deleteUnnecessaryUserData } } = require(`../../utilities`);
 
 const login = async (payload) => {
-	let user = await UserService.getOne({ email: payload.email });
+	let { countryCode, phoneNumber } = payload;
+	if (countryCode.charAt(0) !== `+`) countryCode = `+`.concat(countryCode);
+
+	let user = await UserService.getOne({ countryCode, phoneNumber });
 	if (!user) user = await UserService.create(payload);
 
 	const token = generateToken({ _id: user._id }, `300s`);

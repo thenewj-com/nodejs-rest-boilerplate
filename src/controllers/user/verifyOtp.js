@@ -14,6 +14,7 @@ const { UniversalFunctions: { generateToken } } = require(`../../utilities`);
 const verifyOtp = async (req) => {
 	let user = req.user;
 	let payload = req.body;
+	if (payload.countryCode.charAt(0) !== `+`) payload.countryCode = `+`.concat(payload.countryCode);
 
 	const auth = await AuthService.getOne({ userId: user._id });
 	if (

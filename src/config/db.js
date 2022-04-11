@@ -1,5 +1,5 @@
 /**
- * dbConfig.js
+ * db.js
  * Vishal Kumar
  */
 

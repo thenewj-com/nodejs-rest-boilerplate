@@ -7,6 +7,7 @@
 const JWT = require(`jsonwebtoken`);
 const MD5 = require(`md5`);
 const { User: UserService } = require(`../services`);
+const { errors: { NotFoundError } } = require(`../config`);
 const {
 	server: { JWT_SECRET_KEY },
 	i18n: {
@@ -29,9 +30,9 @@ const verifyToken = async (token) => {
 			if (decoded._id) {
 				const user = await UserService.getOne({ _id: decoded._id });
 				if (user) return resolve(deleteUnnecessaryUserData(user));
-				return reject(NOT_FOUND);
+				return reject(new NotFoundError(NOT_FOUND));
 			}
-			reject(NOT_FOUND);
+			reject(new NotFoundError(NOT_FOUND));
 		});
 	});
 };

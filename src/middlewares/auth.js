@@ -22,12 +22,14 @@ const isLoggedIn = (checkTokenInDB = true) => async (req, res, next) => {
 				if (!auth) return sendResponse(req, res, 401, { error: INVALID_TOKEN });
 			}
 			const user = await verifyToken(token);
+			if (!user) return sendResponse(req, res, 401, { error: INVALID_TOKEN });
+
 			req.user = user;
 			return next();
 		}
 		sendResponse(req, res, 401, { error: INVALID_TOKEN });
 	} catch (error) {
-		next(error);
+		sendResponse(req, res, 401, { error: INVALID_TOKEN });
 	}
 };
 

@@ -24,10 +24,13 @@ const {
 } = require(`../utilities`);
 
 const {
-	logRequestStart,
-	logResponseBody,
-	// rollbar,
-	initialiseSentry
+	errors: { NotFoundError, ValidationError },
+	middlewares: {
+		logRequestStart,
+		logResponseBody,
+		// rollbar,
+		initialiseSentry,
+	}
 } = require(`../config`);
 
 const init = () => {
@@ -63,7 +66,10 @@ const init = () => {
 
 	// eslint-disable-next-line no-unused-vars
 	app.use((err, req, res, next) => {
-		sendResponse(req, res, 500, {}, { message: err.message || err });
+		if (err instanceof NotFoundError) return sendResponse(req, res, 404, { error: err.message || err });
+		if (err instanceof ValidationError) return sendResponse(req, res, 422, { error: err.message || err });
+		if (process.env.NODE_ENV === `development`) console.error(`Server Error===>`, err, `---Server Error`);
+		sendResponse(req, res, 500, { error: err.message || err });
 	});
 
 	return app;

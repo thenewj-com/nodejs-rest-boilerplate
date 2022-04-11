@@ -6,7 +6,7 @@
 `use strict`;
 
 const mongoose = require(`mongoose`);
-const { mongoUri, dbOptions } = require(`../config`);
+const { db: { dbOptions, mongoUri } } = require(`../config`);
 
 const init = async () => {
 	mongoose.connection.once(`open`, async () => {
