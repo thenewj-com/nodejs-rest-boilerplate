@@ -49,7 +49,7 @@ const init = () => {
 	});
 
 	const { User } = require(`../routes`);
-	app.use(`/`, User);
+	app.use(`/v1`, User);
 
 	app.use((req, res) => {
 		sendResponse(req, res, 404, { message: NOT_FOUND });
