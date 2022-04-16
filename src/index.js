@@ -28,7 +28,12 @@ const { BootStrap: { bootstrapAdmin } } = require(`./utilities`);
 	}
 })();
 
-process.on(`unhandledRejection`, (err) => {
-	console.error(`unhandledRejection===>`, err);
-	process.exit(0);
-});
+process
+	.on(`unhandledRejection`, (err) => {
+		console.error(`unhandledRejection===>`, err);
+		process.exit(0);
+	})
+	.on(`uncaughtException`, (err) => {
+		console.error(`uncaughtException===>`, err);
+		process.exit(1);
+	});

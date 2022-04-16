@@ -30,6 +30,38 @@ module.exports = (model) => {
 		return Model[model].find(criteria, projection, options);
 	};
 
+	Services.getPaginatedMany = async (criteria, projection, options = {}) => {
+		options.lean = true;
+		options.virtuals = true;
+		if (!options.page || options.page < 1) options.page = 1;
+		if (!options.limit || options.limit < 1) options.limit = 10;
+		if (!options.sortKey) options.sortKey = `createdAt`;
+		if (!options.sortOrder) options.sortOrder = `desc`;
+
+		return new Promise((resolve, reject) => {
+			Model[model].find(criteria, projection)
+				.sort({
+					[options.sortKey]: [options.sortOrder]
+				})
+				.skip(options.limit * (options.page - 1))
+				.limit(options.limit)
+				.exec(function (err1, data) {
+					if (err1) reject(err1);
+					Model[model].count().exec(function (err2, count) {
+						if (err2) reject(err2);
+						resolve({
+							data,
+							prev: options.page > 1 ? options.page - 1 : null,
+							current: options.page,
+							next: options.page * options.limit < count ? options.page + 1 : null,
+							count,
+							pages: count / options.limit < 1 ? 1 : count / options.limit,
+						});
+					});
+				});
+		});
+	};
+
 	Services.getPopulatedMany = async (
 		criteria,
 		projection,
@@ -42,6 +74,39 @@ module.exports = (model) => {
 			.find(criteria, projection, options)
 			.populate(populateQuery)
 			.exec();
+	};
+
+	Services.getPaginatedPopulatedMany = async (criteria, projection, populateQuery, options = {}) => {
+		options.lean = true;
+		options.virtuals = true;
+		if (!options.page || options.page < 1) options.page = 1;
+		if (!options.limit || options.limit < 1) options.limit = 10;
+		if (!options.sortKey) options.sortKey = `createdAt`;
+		if (!options.sortOrder) options.sortOrder = `desc`;
+
+		return new Promise((resolve, reject) => {
+			Model[model].find(criteria, projection)
+				.sort({
+					[options.sortKey]: [options.sortOrder]
+				})
+				.skip(options.limit * (options.page - 1))
+				.limit(options.limit)
+				.populate(populateQuery)
+				.exec(function (err1, data) {
+					if (err1) reject(err1);
+					Model[model].count().exec(function (err2, count) {
+						if (err2) reject(err2);
+						resolve({
+							data,
+							prev: options.page > 1 ? options.page - 1 : null,
+							current: options.page,
+							next: options.page * options.limit < count ? options.page + 1 : null,
+							count,
+							pages: count / options.limit < 1 ? 1 : count / options.limit,
+						});
+					});
+				});
+		});
 	};
 
 	Services.updateOne = async (criteria, dataToUpdate, options = {}) => {
