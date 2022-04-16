@@ -39,10 +39,8 @@ module.exports = (model) => {
 		if (!options.sortOrder) options.sortOrder = `desc`;
 
 		return new Promise((resolve, reject) => {
-			Model[model].find(criteria, projection)
-				.sort({
-					[options.sortKey]: [options.sortOrder]
-				})
+			Model[model].find(criteria, projection, options)
+				.sort({ [options.sortKey]: options.sortOrder })
 				.skip(options.limit * (options.page - 1))
 				.limit(options.limit)
 				.exec(function (err1, data) {
@@ -85,10 +83,8 @@ module.exports = (model) => {
 		if (!options.sortOrder) options.sortOrder = `desc`;
 
 		return new Promise((resolve, reject) => {
-			Model[model].find(criteria, projection)
-				.sort({
-					[options.sortKey]: [options.sortOrder]
-				})
+			Model[model].find(criteria, projection, options)
+				.sort({ [options.sortKey]: options.sortOrder })
 				.skip(options.limit * (options.page - 1))
 				.limit(options.limit)
 				.populate(populateQuery)
