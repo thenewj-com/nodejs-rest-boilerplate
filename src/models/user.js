@@ -40,7 +40,7 @@ const userSchema = new Schema(
 			},
 			thumbnail: {
 				type: String,
-			}
+			},
 		},
 		isAdmin: {
 			type: Boolean,
@@ -68,7 +68,7 @@ const userSchema = new Schema(
 	{
 		// Make Mongoose use Unix time (seconds since Jan 1, 1970)
 		timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
-	}
+	},
 );
 
 module.exports = model(`User`, userSchema);

@@ -13,5 +13,6 @@ module.exports = {
 		"linebreak-style": [`error`, `unix`],
 		quotes: [`error`, `backtick`, { avoidEscape: true }],
 		semi: [`error`, `always`],
+		"comma-dangle": [`error`, `always-multiline`],
 	},
 };

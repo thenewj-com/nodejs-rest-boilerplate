@@ -8,7 +8,7 @@
 const { Auth: AuthService } = require(`../services`);
 const {
 	UniversalFunctions: { verifyToken },
-	Response: { sendResponse }
+	Response: { sendResponse },
 } = require(`../utilities`);
 const { i18n: { errorMessages: { INVALID_TOKEN } } } = require(`../constants`);
 

@@ -45,7 +45,7 @@ const authSchema = new Schema(
 	{
 		// Make Mongoose use Unix time (seconds since Jan 1, 1970)
 		timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
-	}
+	},
 );
 
 authSchema.index({ validTill: 1 }, { expireAfterSeconds: 0 });

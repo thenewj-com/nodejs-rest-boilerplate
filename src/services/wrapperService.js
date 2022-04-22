@@ -64,7 +64,7 @@ module.exports = (model) => {
 		criteria,
 		projection,
 		populateQuery,
-		options = {}
+		options = {},
 	) => {
 		options.lean = true;
 		options.virtuals = true;

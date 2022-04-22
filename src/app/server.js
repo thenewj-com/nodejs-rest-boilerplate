@@ -30,7 +30,7 @@ const {
 		logResponseBody,
 		// rollbar,
 		initialiseSentry,
-	}
+	},
 } = require(`../config`);
 
 const init = () => {
@@ -47,7 +47,7 @@ const init = () => {
 		res.status(200).send(
 			`Welcome to <strong>${name}</strong>.<br>
 			Contact Author <a href='https://www.linkedin.com/in/the-vishal-kumar/'>${author}</a><br>
-			Go to <a href='${homepage}'>Github Repo</a>`
+			Go to <a href='${homepage}'>Github Repo</a>`,
 		);
 	});
 
