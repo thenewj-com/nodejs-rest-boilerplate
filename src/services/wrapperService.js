@@ -33,10 +33,17 @@ module.exports = (model) => {
 	Services.getPaginatedMany = async (criteria, projection, options = {}) => {
 		options.lean = true;
 		options.virtuals = true;
+		try {
+			options.page = parseInt(options.page);
+			options.limit = parseInt(options.limit);
+		} catch (e) {
+			options.page = 1;
+			options.limit = 10;
+		}
 		if (!options.page || options.page < 1) options.page = 1;
 		if (!options.limit || options.limit < 1) options.limit = 10;
 		if (!options.sortKey) options.sortKey = `createdAt`;
-		if (!options.sortOrder) options.sortOrder = `desc`;
+		if (!options.sortOrder) options.sortOrder = -1;
 
 		return new Promise((resolve, reject) => {
 			Model[model].find(criteria, projection, options)
@@ -45,7 +52,7 @@ module.exports = (model) => {
 				.limit(options.limit)
 				.exec(function (err1, data) {
 					if (err1) reject(err1);
-					Model[model].count().exec(function (err2, count) {
+					Model[model].count(criteria).exec(function (err2, count) {
 						if (err2) reject(err2);
 						resolve({
 							data,
@@ -53,7 +60,7 @@ module.exports = (model) => {
 							current: options.page,
 							next: options.page * options.limit < count ? options.page + 1 : null,
 							count,
-							pages: count / options.limit < 1 ? 1 : count / options.limit,
+							pages: count / options.limit < 1 ? 1 : Math.ceil(count / options.limit),
 						});
 					});
 				});
@@ -77,10 +84,17 @@ module.exports = (model) => {
 	Services.getPaginatedPopulatedMany = async (criteria, projection, populateQuery, options = {}) => {
 		options.lean = true;
 		options.virtuals = true;
+		try {
+			options.page = parseInt(options.page);
+			options.limit = parseInt(options.limit);
+		} catch (e) {
+			options.page = 1;
+			options.limit = 10;
+		}
 		if (!options.page || options.page < 1) options.page = 1;
 		if (!options.limit || options.limit < 1) options.limit = 10;
 		if (!options.sortKey) options.sortKey = `createdAt`;
-		if (!options.sortOrder) options.sortOrder = `desc`;
+		if (!options.sortOrder) options.sortOrder = -1;
 
 		return new Promise((resolve, reject) => {
 			Model[model].find(criteria, projection, options)
@@ -90,7 +104,7 @@ module.exports = (model) => {
 				.populate(populateQuery)
 				.exec(function (err1, data) {
 					if (err1) reject(err1);
-					Model[model].count().exec(function (err2, count) {
+					Model[model].count(criteria).exec(function (err2, count) {
 						if (err2) reject(err2);
 						resolve({
 							data,
@@ -98,7 +112,7 @@ module.exports = (model) => {
 							current: options.page,
 							next: options.page * options.limit < count ? options.page + 1 : null,
 							count,
-							pages: count / options.limit < 1 ? 1 : count / options.limit,
+							pages: count / options.limit < 1 ? 1 : Math.ceil(count / options.limit),
 						});
 					});
 				});
@@ -129,7 +143,7 @@ module.exports = (model) => {
 	};
 
 	Services.count = async (criteria) => {
-		return Model[model].countDocuments(criteria);
+		return Model[model].count(criteria);
 	};
 
 	Services.aggregate = async (group) => {
