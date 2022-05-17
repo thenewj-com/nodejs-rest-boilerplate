@@ -27,21 +27,27 @@ module.exports = (model) => {
 	Services.getMany = async (criteria, projection, options = {}) => {
 		options.lean = true;
 		options.virtuals = true;
-		return Model[model].find(criteria, projection, options);
+
+		if (options.sortKey) {
+			if (!options.sortOrder) options.sortOrder = -1;
+			try { options.page = parseInt(options.page); } catch (e) { options.page = 1; }
+			try { options.limit = parseInt(options.limit); } catch (e) { options.limit = 10; }
+
+			return Model[model].find(criteria, projection, options)
+				.sort({ [options.sortKey]: options.sortOrder })
+				.skip(options.limit * (options.page - 1))
+				.limit(options.limit);
+		} else {
+			return Model[model].find(criteria, projection, options);
+		}
 	};
 
 	Services.getPaginatedMany = async (criteria, projection, options = {}) => {
 		options.lean = true;
 		options.virtuals = true;
-		try {
-			options.page = parseInt(options.page);
-			options.limit = parseInt(options.limit);
-		} catch (e) {
-			options.page = 1;
-			options.limit = 10;
-		}
-		if (!options.page || options.page < 1) options.page = 1;
-		if (!options.limit || options.limit < 1) options.limit = 10;
+		try { options.page = parseInt(options.page); } catch (e) { options.page = 1; }
+		try { options.limit = parseInt(options.limit); } catch (e) { options.limit = 10; }
+
 		if (!options.sortKey) options.sortKey = `createdAt`;
 		if (!options.sortOrder) options.sortOrder = -1;
 
@@ -84,15 +90,10 @@ module.exports = (model) => {
 	Services.getPaginatedPopulatedMany = async (criteria, projection, populateQuery, options = {}) => {
 		options.lean = true;
 		options.virtuals = true;
-		try {
-			options.page = parseInt(options.page);
-			options.limit = parseInt(options.limit);
-		} catch (e) {
-			options.page = 1;
-			options.limit = 10;
-		}
-		if (!options.page || options.page < 1) options.page = 1;
-		if (!options.limit || options.limit < 1) options.limit = 10;
+
+		try { options.page = parseInt(options.page); } catch (e) { options.page = 1; }
+		try { options.limit = parseInt(options.limit); } catch (e) { options.limit = 10; }
+
 		if (!options.sortKey) options.sortKey = `createdAt`;
 		if (!options.sortOrder) options.sortOrder = -1;
 
